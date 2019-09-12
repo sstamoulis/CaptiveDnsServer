@@ -2,6 +2,12 @@
 
 #include <stdint.h>
 
+struct DnsServer;
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*
  * The header contains the following fields:
  * 
@@ -31,3 +37,18 @@ typedef struct dns_header {
     uint16_t nscount;
     uint16_t arcount;
 } dns_header_t;
+
+typedef struct dns_config {
+    void (*start_func)(void);
+    void (*stop_func)(void);
+} dns_config_t;
+
+DnsServer * dns_server_init(dns_config_t config);
+void dns_server_deinit(DnsServer * server);
+
+void dns_server_start(DnsServer * server);
+void dns_server_stop(DnsServer * server);
+
+#ifdef __cplusplus
+}
+#endif
